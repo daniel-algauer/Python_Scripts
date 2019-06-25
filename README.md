@@ -31,7 +31,7 @@ path = "/home/user/Documents/your_folder"
 
 #### Usage
 
-Call the the function with the proper arguments
+Call the the function with the proper arguments.
 ```python
 writeLog(type_msg, id_program, system_msg, log_msg)
 
@@ -40,7 +40,7 @@ writeLog(type_msg, id_program, system_msg, log_msg)
 # system_msg: Error message, captured by the system Excepctions.
 # log_msg: Custom message 
 ```
-When need, just call the function passing the arguments
+Just call the function passing the arguments.
 
 ```python
 if TRUE:
@@ -60,6 +60,6 @@ exception IOError as error:
 ## Release History
 
 * 0.0.1
-  * Work in progress
+  * Work in progress.
 ## Author
 Created by @Daniel Algauer
