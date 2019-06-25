@@ -19,6 +19,16 @@ import writelog as writelog
 #Import the function calling the import on your code
 ```
 
+```python
+writeActionAsLog.py
+#Change the value of the variable folder for new name
+folder = "name_folder"
+#Or change all the path of the file that will be saved with the log. If you leave in blank, the path will be relative with the executed file.
+path = ""
+#to
+path = "/home/user/Documents/your_folder"
+```
+
 #### Usage
 
 Call the the function with the proper arguments
@@ -36,7 +46,7 @@ When need, just call the function passing the arguments
 if TRUE:
     writeLog("OK", "id_program1", "", "Successfully.")
 else:
-    writeLog("NOK", "id_program2", "", "Error.")
+    writeLog("NOK", "id_program1", "", "Error.")
 ```
 
 or
@@ -45,7 +55,7 @@ or
 try:
     writeLog("OK", "id_program1", "", "Successfully.")
 exception IOError as error:
-    writeLog("NOK", "id_program2", error, "")
+    writeLog("NOK", "id_program1", error, "")
 ```
 ## Release History
 
