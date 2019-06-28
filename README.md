@@ -4,7 +4,6 @@
 
 ## Table of contents
 * [/production/das-string-to-table.py](#das-string-to-table)
-* [Release_History](#release-history)
 * [Author](#author)
 
 ## das-string-to-table
