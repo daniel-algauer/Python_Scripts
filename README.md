@@ -4,13 +4,24 @@ Here goes some useful scripts developed along the years with python.
 
 
 ## Table of contents
-* [Write Action As Log](#write-action-as-log)
+* [/production/das-string-to-array.py](#das-string-to-array)
 * [Release_History](#release-history)
 * [Author](#author)
 
-## Write Action As Log
-
-This function receives some parameters and creates a txt file with the log of the operations.
+## das-string-to-array
+´´´
+ This function receives a .txt file as input.
+ The function extracts the text on every "." find and splits for each row.
+ a table is printed as columns title | date+time
+ python3.6+
+ Program: das-string-to-array.py
+ Description: This function receives a .txt file as input, split by separator and print as dataFrame (pandas) object.
+ versão: 1.0
+ Dependencies: os, datetime, pandas as pd
+ Created: 28/06/2019 
+ Last Modified: 28/06/2019
+ Modifications:
+´´´
 
 ### Setup and Usage
 #### Setup
