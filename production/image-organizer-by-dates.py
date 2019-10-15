@@ -1,6 +1,6 @@
 """ 
 # python3.6+
-# Program: image-organizer-bydates.py
+# Program: image-organizer-by-dates.py
 # Name: ImageOrganizer
 # Description: This program copie every image on certain folder and organize byDates with the exif data, if founded.
 #              This program also uses utils.py to create a log files.
