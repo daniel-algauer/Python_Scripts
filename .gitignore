@@ -2,3 +2,5 @@
 
 /.git
 /production/__pycache__
+*.pyc
+*.pyo

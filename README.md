@@ -27,6 +27,7 @@
 ## image-organizer-by-dates
 
 ```python
+# ##################################
 # Program: image-organizer-bydates.py
 # python3.6+
 # Name: ImageOrganizer
@@ -38,7 +39,7 @@
 # Created: 06/28/2019 
 # Last Modified: 10/15/2019
 # Modifications: log in excel generated with utils
-#
+# ##################################
 ```
 
 ## Author
