@@ -1,13 +1,28 @@
+""" 
+# python3.6+
+# Program: image-organizer-bydates.py
+# Name: ImageOrganizer
+# Description: This program copie every image on certain folder and organize byDates with the exif data, if founded.
+#              This program also uses utils.py to create a log files.
+#              For details on how to execute, plase go to def main():
+# versão: 1.2
+# Dependencies: os, datetime, pandas as pd, numpy as pd
+# Created: 06/28/2019 
+# Last Modified: 10/15/2019
+# Modifications: log in excel generated with utils
+#
+ """
 import os, datetime, sys, shutil
 from PIL import Image
 from PIL.ExifTags import TAGS
 from PIL.ExifTags import GPSTAGS
-from stat import * # ST_SIZE etc
 import pandas as pd
 import numpy as np
 import utils
 ID_PROGRAM = "ImageOrganizer"
-""" TYPES_FILES = [".aif", ".cda", ".mid", ".midi", ".mp3", ".mpa", ".ogg", ".wav", ".wma", ".wpl", ".7z", ".arj",
+
+""" 
+TYPES_FILES = [".aif", ".cda", ".mid", ".midi", ".mp3", ".mpa", ".ogg", ".wav", ".wma", ".wpl", ".7z", ".arj",
 ".deb", ".pkg", ".rar", ".rpm", ".tar.gz", ".z", ".zip", ".bin", ".dmg", ".iso", ".toast", ".vcd", ".csv", ".dat",
 ".db", ".dbf", ".log", ".mdb", ".sav", ".sql", ".tar", ".xml", ".apk", ".bat", ".bin", ".cgi", ".pl", ".com", ".exe",
 ".gadget", ".jar", ".py", ".wsf", ".fnt", ".fon", ".otf", ".ttf", ".ai", ".bmp", ".gif", ".ico", ".jpeg", ".jpg", ".png",
@@ -15,7 +30,8 @@ ID_PROGRAM = "ImageOrganizer"
 ".part", ".php", ".py", ".rss", ".xhtml", ".key", ".odp", ".pps", ".ppt", ".pptx", ".c", ".class", ".cpp", ".cs", ".h", ".java",
 ".sh", ".swift", ".vb", ".ods", ".xlr", ".xls", ".xlsx", ".bak", ".cab", ".cfg", ".cpl", ".cur", ".dll", ".dmp", ".drv", ".icns",
 ".ico", ".ini", ".lnk", ".msi", ".sys", ".tmp", ".3g2", ".3gp", ".avi", ".flv", ".h264", ".m4v", ".mkv", ".mov", ".mp4", ".mpg",
-".mpeg", ".rm", ".swf", ".vob", ".wmv", ".doc", ".docx", ".odt", ".pdf", ".rtf", ".tex", ".txt", ".wks", ".wps", ".wpd"] """
+".mpeg", ".rm", ".swf", ".vob", ".wmv", ".doc", ".docx", ".odt", ".pdf", ".rtf", ".tex", ".txt", ".wks", ".wps", ".wpd"] 
+"""
 
 def get_geotagging(exif):
     if not exif:
@@ -52,8 +68,6 @@ def getParamsImg(file_path):
         working_img.close()
         if not exif:
             result["Msg"] = "Exif data not found."
-            #st = os.stat(file_path)
-            #print(dates)
         else:
             for (key, val) in exif.items():
                 decoded = TAGS.get(key, key)
@@ -65,12 +79,13 @@ def getParamsImg(file_path):
                         result[decoded] = val
                 else:
                     msg_err = "No TAG Identified: " + str(key) + " | decoded: " + str(decoded)
-    except (IOError, EOFError) as err:
+    except (IOError, EOFError, ValueError, Exception) as err:
         msg_err = str(sys.exc_info()[0])
-        utils.log_message("OK", ID_PROGRAM, "getParameters", "", err + " - " + msg_err)
+        msg_err = str(file_path) + str("|") + str(err) + str("|") + str(msg_err)
+        utils.log_message("NOK", ID_PROGRAM, "getParameters", "", msg_err)
     except ValueError as error:
         msg_err = str(error)
-        utils.log_message("OK", ID_PROGRAM, "getParameters", "", msg_err)
+        utils.log_message("NOK", ID_PROGRAM, "getParameters", "", msg_err)
     finally:
         #if working_img:
         if not result["Msg"]:
@@ -150,6 +165,7 @@ def findFiles(rootFolder, typesFiles, output_folder):
                     last_folder = ""
                 try:
                     result = saveCopyFileImg(file_to_write, params, output_folder, last_folder)
+                    #print(file_to_write, params, output_folder, last_folder)
                     list_files.append(file_to_write)
                 except Exception as identifier:
                     utils.log_message("NOK", ID_PROGRAM, "findFiles", "File not copied: " + file_to_write, str(identifier))
@@ -160,31 +176,32 @@ def findFiles(rootFolder, typesFiles, output_folder):
         utils.log_message("OK", ID_PROGRAM, "findFiles", "Finished", str(result))
     return list_files
 
-def organize():
-    """
-    1. Inserir pasta raiz para procurar fotos (aceita folders and subfolders)
-    2. Inserir pasta raiz destino limpa, o algoritmo ira criar as pastas internas
-    3. Encontrar arquivos de imagem na pasta raiz
-    4. Identificar os metadados da foto
-    5. Salvar a foto em nova pasta de acordo com a estrutura:
-        Raiz > ANO > Mes > DIA
-    6. Se pasta lida contem somente
-    """
 def main():
-    rootFolder = "/home/daniel/Documents/projetos_py/face-recognition/teste"
-    type_files = [".png", ".jpg", ".jpeg", ".raw", ".cr2", ".JPG", ".JPEG", ".png", ".PNG", ".ttf", ".ai", ".bmp", ".gif", ".ico", ".ps", ".psd", ".svg", ".tif", ".tiff"]
-    output_folder = "/home/daniel/Documents/projetos_py/resultado_org/"
-
+    #change this to your root folder you would like to scan for images
+    rootFolder = "/Pictures/"
+    
+    #change this to the folder you would like to save the new structure - Copied images
+    output_folder = "/Results/"
+    
+    #change this to any image type you want/or not to copie
+    type_files = [".png", ".jpg", ".jpeg", ".raw", ".cr2", ".CR2", ".JPG", ".JPEG", ".png", ".PNG", ".ttf", ".ai", ".bmp", ".gif", ".ico", ".ps", ".psd", ".svg", ".tif", ".tiff"]
+    
+    #Find files and copie, main function - returns de list of files copied
     files_results = findFiles(rootFolder, type_files, output_folder)
     
-    outputDir = "/home/daniel/Documents/projetos_py/logs/"
-    columns = ["Imagens gravadas"]
-    filename = "nome_arquivo"
+    #change this to the folder you would like to save your logs
+    outputDirLogs = "/logs/"
+
+    #this creates an excel file with your images + path you copied
+    columns = ["Saved images"]
+    filename = "file_name"
     date = datetime.datetime.today().strftime("%Y_%m_%d")
-    utils.writeDataToExcel(files_results, columns, outputDir, filename, str(date))
+    utils.writeDataToExcel(files_results, columns, outputDirLogs, filename, str(date))
     
+    #end of program
     if files_results:
-        print("Programa encerrado.")
+        print("End of program")
+        print("Files copied to: ", output_folder)
 
 if __name__ == "__main__":
     main()

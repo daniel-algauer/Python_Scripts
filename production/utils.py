@@ -1,45 +1,13 @@
-""" 
-#Setup and Usage
-
-import utils
-
-#Dependencies/Libs
-
-import datetime
-import os
-import pandas as pd
-
-
-""" 
-    """
-    Your code
-    ... 
-    utils.log_message(type_msg, id_program, function_name, system_msg, log_msg)
-    utils.log_message(String, String, String, String, String)
-
-    utils.writeDataToExcel(data, columns, outputDir, file_name, date)
-    writeDataToExcel(list, list, String, String, String)"""
-
-"""
-
-#version
- * 0.0.1 - Write log in a fixed file
- * 0.0.2 - Write log in a dinamic file based on type of msg,
-           Logged at the same yourProgramPath/logs
- """
 #import Libs
 import datetime
 import os
 import pandas as pd
 
-#Variables
-#You can alter the path of the folder 
+#You can alter the path of the folder to any place you want.
 folder = "logs"
 
-
 def log_message(type_msg, id_program, function_name, system_msg, log_msg):
-    #pegar o nome do programa/codigo e criar um arquivo de log para ele
-
+    #get id_program and creates a new log file / OK or NOK
     #time_log
     now = datetime.datetime.now()
     date = now.strftime('%d_%m_%Y')
@@ -86,8 +54,8 @@ def writeDataToExcel(data, columns, outputDir, file_name, date):
         writer.save()
         result = True
     except Exception as error:
-        print("Erro na gravacao do arquivo: %s"%outputname)
-        print("------ Erro: %s"%error)
+        print("Error on create file: %s"%outputname)
+        print("------ Error: %s"%error)
     finally:
         if result:
-            print("File: %s | %s | Gravado com sucesso."%(date, outputname))
+            print("File: %s | %s | copied."%(date, outputname))
