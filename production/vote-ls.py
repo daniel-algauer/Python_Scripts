@@ -1,3 +1,14 @@
+# ##################################
+# Program: vote-ls.py
+# python3.6+
+# Name: Populate google forms example
+# Description: This code use selenium google driver to populate fields/checkbox in a google form
+# versão: 1
+# Dependencies: selenium / webdriver google chrome
+# Created: 08/28/2019 
+# Last Modified: 10/28/2019
+# ##################################
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
